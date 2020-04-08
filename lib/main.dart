@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.black,
       ),
       home: CounterPage(title: 'Flutter Demo Home Page'),
     );
@@ -27,17 +27,23 @@ class CounterPage extends StatefulWidget {
 
 class _CounterPageState extends State<CounterPage> {
   int _counter = 0;
-  double _opacity = 1;
+  double _height = 180.0;
+  double _width = 200.0;
+  Color _bgColor = Colors.white;
 
   void _incrementCounter() {
     setState(() {
-        _opacity = 0;
+        _height = 0;
+        _width = 0;
+        _bgColor = Colors.black.withOpacity(0.7);
     });
 
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       setState(() {
         _counter++;
-        _opacity = 1.0;
+        _height = 200.0;
+        _width = 300.0;
+        _bgColor = Colors.white;
       });
     });
   }
@@ -48,23 +54,34 @@ class _CounterPageState extends State<CounterPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
+        width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Text(
-              'Current Count',
-            ),
+            Text('Current Count',),
             SizedBox(height: 40.0,),
-            AnimatedOpacity(
-              alwaysIncludeSemantics: true,
-              opacity: _opacity,
-              duration: Duration(milliseconds: 300),
-              child: Text(
-                '$_counter',
-                style: TextStyle(
-                  fontSize: 80.0,
-                  fontWeight: FontWeight.w800,
+            Expanded(
+              child: Center(
+                child: AnimatedContainer(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: _bgColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  width: _width,
+                  height: _height,
+                  curve: Curves.easeInOut,
+                  duration: Duration(milliseconds: 250),
+                  child: Text(
+                    '$_counter',
+                    style: TextStyle(
+                      fontSize: 60.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -75,7 +92,7 @@ class _CounterPageState extends State<CounterPage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
