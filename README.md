@@ -1,6 +1,6 @@
 # animatetinz
 
-A new Flutter application.
+Contains all my animation implementations using the flutter framework
 
 ## Getting Started
 
